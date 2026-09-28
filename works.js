@@ -136,6 +136,26 @@ window.WORKS = [
     desc: "80 秒短片纯靠一页 HTML + WebGL2 实现:玻璃与金箔马赛克聚成鱼、鹤与鸽,含昼夜与星座转场,零外部资源。",
     tags: ["WebGL", "短片", "生成艺术"]
   },
+  {
+    id: "lin-alg-trailer",
+    title: "线性代数宣传片:Opus 5.5 一轮对话直出",
+    cat: "video", url: "https://www.bilibili.com/video/BV1hphd69EDA",
+    discuss: null,
+    video: "media/lin-alg-trailer.mp4",
+    date: "2026-09-27", source: "bilibili.com", pts: null, cmt: null,
+    desc: "B站 UP「输入偏移」用 5.5 一轮对话直出的线性代数宣传片:1080p 数学动画配乐齐全,标题自述「眩晕瘫坐」。",
+    tags: ["视频", "B站", "数学动画"]
+  },
+  {
+    id: "agi-concept-mv",
+    title: "吓哭了!Opus 5.5 AGI 概念 MV",
+    cat: "video", url: "https://www.bilibili.com/video/BV18ta86EEHb",
+    discuss: null,
+    video: "media/agi-concept-mv.mp4",
+    date: "2026-09-27", source: "bilibili.com", pts: null, cmt: null,
+    desc: "B站 UP「白雪仅当雪白」用 5.5 制作的 AGI 主题概念 MV。",
+    tags: ["视频", "B站", "MV"]
+  },
 
   // ── 游戏·互动 ──────────────────────────────────────────────
   {

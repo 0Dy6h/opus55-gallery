@@ -1,5 +1,23 @@
 # 工作记录
 
+## 2026-09-28 · 收录 B 站两件 5.5 制作视频(45 → 47 件)
+
+**背景**:用户 bilibili 桌面客户端缓存了 9-27 发布的两件 Opus 5.5 制作视频,要求收录进作品集。筛选标准按用户口径:**作品须为 5.5 制作**(标题带 5.5 只作线索,不作收录依据)。缓存目录 `D:\B站视频\B站缓存` 共 6 组,另 4 组(Harness 教程/法律解读/GPT6-Astra MV/白噪音)与 5.5 无关,未收录。
+
+**新增 2 条**(cat=video,discuss=null,video 字段均配):
+- lin-alg-trailer:《线性代数宣传片:Opus 5.5 一轮对话直出》UP「输入偏移」BV1hphd69EDA,215s,2.3万播放
+- agi-concept-mv:《吓哭了!Opus 5.5 AGI 概念 MV》UP「白雪仅当雪白」BV18ta86EEHb,157s
+
+**mp4 获取(新配方,B 站缓存直转,无需网络)**:B 站桌面端缓存的 `*.m4s` 每个文件头有 **9 字节 `'0'` 填充**,`tail -c +10` 剥掉即是标准 fMP4;`-1-30080`=视频流、`-1-30280`=音频流。WSL ffmpeg(Linux 版,`~/.hermes/tools/`)`-c copy -movflags +faststart` 无损合成。两件都是 1080p H.264+AAC,产出 `media/lin-alg-trailer.mp4`(103.7MB,214s)、`media/agi-concept-mv.mp4`(79.6MB,157s)。ffmpeg.exe(Windows 版)在 WSL 里跑会假死,用 Linux 版。注:ffprobe 探针须加 `-probesize 2M -analyzeduration 2M`,否则对裸流卡死。
+
+**文档同步**:README 计数 45→47 + 数据源补 bilibili 行;AGENTS.md 三处 45→47(联动规则、验证清单首屏、页脚计数);works.js 视频分类插入 2 条(按 date 降序落位)。
+
+**验证**(node --check + http://127.0.0.1:8123 实测,服务器已清理):47 卡渲染、分类 chips「视频·动画 10」、页脚 47;3 个 video 元素属性正确(preload=metadata、无 autoplay、data-fallback 指向 B 站原址);两个新视频 play() 实测 readyState 4、1920×1080 解码、4s 推进 3.91s、无 media error;回归:搜「宝可梦」2 条、搜「线性代数」1 条、清空 47、热度排序首位官方发布页。media 总量 3 件约 198MB,仍按 .gitignore 不入库。
+
+**留给用户**:双击 `index.html` 人工过一遍(尤其 file:// 直开时两个新视频可播)。
+
+---
+
 ## 2026-09-28 · /review 整改(视频功能加固 + esc 补齐)
 
 **背景**:对上两轮变更做 /review,产出 🟠×2、🟡×2、⚪×2;用户拍板「开始整改优化」。逐项落实如下。
