@@ -11,9 +11,10 @@
     --panel: rgba(29, 26, 21, .72);
     --panel-solid: #1d1a15;
     --line: rgba(240, 220, 190, .1);
+    --line-2: rgba(240, 220, 190, .18);
     --text: #f0e9dd;
     --muted: #a89d8c;
-    --faint: #6f675b;
+    --faint: #7a7164;
     --accent: #d97757;
     --accent-2: #f2b47e;
     --accent-soft: rgba(217, 119, 87, .14);
@@ -26,7 +27,8 @@
     --official: #d97757;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { color-scheme: dark; scroll-behavior: smooth; }
+  /* scrollbar-gutter:打开放映弹层锁滚动时,滚动条消失也不让页面横跳 */
+  html { color-scheme: dark; scroll-behavior: smooth; scrollbar-gutter: stable; }
   body {
     background:
       radial-gradient(1200px 700px at 75% -10%, rgba(217,119,87,.09), transparent 60%),
@@ -38,14 +40,19 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
+  html.modal-open body { overflow: hidden; }
   ::selection { background: var(--accent); color: #fff; }
-  ::-webkit-scrollbar { width: 9px; }
+  ::-webkit-scrollbar { width: 9px; height: 9px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(var(--accent), #8a4a34);
     border-radius: 99px; border: 2px solid var(--bg);
   }
   a { color: inherit; }
+  button { font-family: inherit; color: inherit; }
+  /* 键盘可达性:统一的焦点环 */
+  :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 6px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   /* ── 3D 星域画布 & 极光 ─────────────────────────── */
   #bg3d { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
@@ -74,7 +81,7 @@
 
   /* ── Hero ─────────────────────────────────────── */
   .hero {
-    max-width: 1200px; margin: 0 auto; padding: 64px 24px 8px;
+    max-width: 1200px; margin: 0 auto; padding: 60px 24px 8px;
     display: flex; align-items: center; justify-content: space-between; gap: 40px;
   }
   .hero-left { flex: 1; min-width: 0; }
@@ -110,8 +117,11 @@
     color: var(--muted); margin-top: 14px; max-width: 640px; font-size: 15px;
     animation: fadeUp .7s .16s cubic-bezier(.22,1,.36,1) both;
   }
-  .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px;
-    animation: fadeUp .7s .24s cubic-bezier(.22,1,.36,1) both; }
+  .hero p.sub b { color: var(--accent-2); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px;
+    animation: fadeUp .7s .2s cubic-bezier(.22,1,.36,1) both; }
+  .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px;
+    animation: fadeUp .7s .26s cubic-bezier(.22,1,.36,1) both; }
   .spec {
     font-size: 12.5px; color: var(--muted);
     background: var(--panel); backdrop-filter: blur(8px);
@@ -155,30 +165,139 @@
   @keyframes shadowPulse { 0%,100% { transform: scaleX(1); opacity: .8; } 50% { transform: scaleX(.72); opacity: .5; } }
   @media (max-width: 960px) { .cube-zone { display: none; } }
 
+  /* ── 通用按钮 ─────────────────────────────────── */
+  .btn {
+    text-decoration: none; font-size: 13px; font-weight: 700; line-height: 1.4;
+    padding: 8px 15px; border-radius: 10px; transition: all .2s;
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid transparent; background: none; cursor: pointer; white-space: nowrap;
+  }
+  .btn.primary {
+    background: linear-gradient(135deg, var(--accent), #c05a38); color: #fff;
+    box-shadow: 0 4px 16px rgba(217,119,87,.3);
+  }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(217,119,87,.5); filter: brightness(1.08); }
+  .btn.ghost { border-color: var(--line-2); color: var(--muted); }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent-2); transform: translateY(-2px); }
+  .btn.lg { font-size: 14.5px; padding: 11px 20px; border-radius: 12px; }
+
+  /* ── 放映厅横栏 ───────────────────────────────── */
+  .reel-sec { max-width: 1200px; margin: 38px auto 0; padding: 0 24px; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .sec-head h2 { font-size: 20px; font-weight: 900; letter-spacing: .02em; }
+  .sec-head h2 span { color: var(--accent); }
+  .sec-sub { color: var(--faint); font-size: 13px; }
+  .reel-nav { margin-left: auto; display: flex; gap: 8px; align-self: center; }
+  .reel-nav button {
+    width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 17px; line-height: 1;
+    background: rgba(29,26,21,.8); border: 1px solid var(--line-2); color: var(--muted);
+    transition: border-color .2s, color .2s, opacity .2s;
+  }
+  .reel-nav button:hover:not(:disabled) { border-color: var(--accent); color: var(--text); }
+  .reel-nav button:disabled { opacity: .35; cursor: default; }
+  .reel {
+    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 4px 2px 14px; scrollbar-width: thin; scrollbar-color: rgba(217,119,87,.5) transparent;
+    -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, #000 92%, transparent);
+  }
+  .tile {
+    --cat: var(--accent);
+    flex: none; width: 272px; scroll-snap-align: start;
+    background: none; border: none; padding: 0; text-align: left; cursor: pointer;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .tile .shot {
+    position: relative; display: block; width: 100%; aspect-ratio: 16 / 9;
+    border-radius: 12px; overflow: hidden; background: #000;
+    border: 1px solid var(--line); transition: border-color .25s, box-shadow .3s;
+  }
+  .tile:hover .shot, .tile:focus-visible .shot {
+    border-color: color-mix(in srgb, var(--cat) 60%, transparent);
+    box-shadow: 0 14px 34px -14px rgba(0,0,0,.8), 0 0 28px -8px color-mix(in srgb, var(--cat) 45%, transparent);
+  }
+  .tile:focus-visible { outline: none; }
+  .tile:focus-visible .shot { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+  .tile img { transition: transform .5s cubic-bezier(.22,1,.36,1); }
+  .tile:hover img { transform: scale(1.06); }
+  .tile-title { font-size: 13.5px; font-weight: 700; line-height: 1.45; color: var(--text);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tile-cat { font-size: 12px; color: var(--faint); display: flex; align-items: center; gap: 6px; margin-top: -4px; }
+
+  /* ── 封面(卡片/放映厅共用) ─────────────────────── */
+  .cover {
+    position: relative; display: block; width: 100%; aspect-ratio: 16 / 9;
+    border-radius: 12px; overflow: hidden; background: #000;
+    border: none; padding: 0; cursor: pointer; text-decoration: none;
+    transform: translateZ(10px);
+  }
+  .cover img, .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover img { transition: transform .5s cubic-bezier(.22,1,.36,1), filter .3s; }
+  .card:hover .cover img { transform: scale(1.04); }
+  .cover::after, .shot::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.55));
+  }
+  /* 没有封面图(或图片加载失败)时的生成封面:分类色光斑 + 来源域名 */
+  .gen {
+    position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 14px 16px; gap: 2px;
+    background:
+      radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--cat) 42%, transparent), transparent 62%),
+      linear-gradient(160deg, #2c261e, #14110d);
+  }
+  @supports not (color: color-mix(in srgb, red, blue)) {
+    .gen { background: radial-gradient(120% 100% at 100% 0%, rgba(217,119,87,.35), transparent 62%), linear-gradient(160deg, #2c261e, #14110d); }
+  }
+  .gen b { font-size: 19px; font-weight: 900; color: var(--text); letter-spacing: .02em; word-break: break-all; line-height: 1.25; position: relative; z-index: 1; }
+  .gen i { font-style: normal; font-size: 12px; color: var(--muted); position: relative; z-index: 1; }
+  .play-ico {
+    position: absolute; left: 50%; top: 50%; z-index: 2;
+    width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%;
+    display: grid; place-items: center; padding-left: 4px;
+    font-size: 19px; color: #fff;
+    background: rgba(13,11,9,.55); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.35);
+    box-shadow: 0 6px 24px rgba(0,0,0,.45);
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1), background .2s, border-color .2s;
+  }
+  .card:hover .play-ico, .tile:hover .play-ico, .cover:focus-visible .play-ico {
+    transform: scale(1.1); background: var(--accent); border-color: transparent;
+  }
+  .ext-ico { position: absolute; right: 10px; top: 10px; z-index: 2; font-size: 12px; color: #fff;
+    background: rgba(13,11,9,.6); border-radius: 8px; padding: 2px 8px; opacity: 0; transition: opacity .2s; }
+  .card:hover .ext-ico { opacity: 1; }
+  .badge {
+    position: absolute; right: 9px; bottom: 9px; z-index: 2;
+    font-size: 11.5px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums;
+    background: rgba(0,0,0,.66); border-radius: 6px; padding: 1px 7px; letter-spacing: .02em;
+  }
+  .badge.web { background: color-mix(in srgb, var(--cat) 70%, #000); }
+
   /* ── 玻璃工具栏 ───────────────────────────────── */
   .toolbar-wrap {
-    position: sticky; top: 0; z-index: 50; margin-top: 40px;
-    background: rgba(13,11,9,.66); backdrop-filter: blur(16px) saturate(1.3);
+    position: sticky; top: 0; z-index: 50; margin-top: 30px;
+    background: rgba(13,11,9,.72); backdrop-filter: blur(16px) saturate(1.3);
     border-bottom: 1px solid var(--line);
   }
   .toolbar { max-width: 1200px; margin: 0 auto; padding: 14px 24px;
     display: flex; flex-direction: column; gap: 12px; }
-  .toolbar-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .toolbar-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   #search {
     flex: 1; min-width: 220px;
     background: rgba(29,26,21,.8); border: 1px solid var(--line);
-    color: var(--text); border-radius: 12px; padding: 10px 16px; font-size: 14px;
+    color: var(--text); border-radius: 12px; padding: 10px 16px; font-size: 14px; font-family: inherit;
     outline: none; transition: border-color .2s, box-shadow .2s;
   }
   #search:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(217,119,87,.15), 0 0 24px rgba(217,119,87,.15); }
   #search::placeholder { color: var(--faint); }
-  .sort, .fav-toggle {
+  .sort, .toggle {
     background: rgba(29,26,21,.8); border: 1px solid var(--line); color: var(--muted);
     border-radius: 12px; padding: 10px 15px; font-size: 13.5px; cursor: pointer;
     transition: all .2s; font-family: inherit;
   }
-  .sort:hover, .fav-toggle:hover { border-color: var(--accent); color: var(--text); transform: translateY(-2px); }
-  .fav-toggle.active {
+  .sort:hover, .toggle:hover { border-color: var(--accent); color: var(--text); transform: translateY(-2px); }
+  .toggle.active {
     color: #fff; border-color: var(--accent);
     background: linear-gradient(135deg, var(--accent), #b85a3d);
     box-shadow: 0 4px 18px rgba(217,119,87,.4);
@@ -201,18 +320,18 @@
   .chip .n { opacity: .6; font-size: 12px; margin-left: 3px; }
 
   /* ── 卡片网格 ─────────────────────────────────── */
-  main { max-width: 1200px; margin: 0 auto; padding: 30px 24px 44px; }
+  main { max-width: 1200px; margin: 0 auto; padding: 26px 24px 44px; scroll-margin-top: 120px; }
   .result-line { color: var(--faint); font-size: 13px; margin-bottom: 18px; }
   .result-line b { color: var(--accent-2); font-size: 15px; font-variant-numeric: tabular-nums; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px;
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px;
     perspective: 1400px; }
 
   .card {
     --cat: var(--accent);
     position: relative;
-    background: linear-gradient(160deg, rgba(36,32,26,.9), rgba(24,21,17,.9));
+    background: linear-gradient(160deg, rgba(36,32,26,.92), rgba(24,21,17,.92));
     border: 1px solid var(--line); border-radius: 18px;
-    padding: 20px 20px 16px; display: flex; flex-direction: column; gap: 10px;
+    padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 12px;
     transform-style: preserve-3d; will-change: transform;
     transition: transform .16s ease-out, border-color .25s, box-shadow .3s;
     opacity: 0;
@@ -243,50 +362,31 @@
   .card::after {
     content: ""; position: absolute; inset: 0; border-radius: 18px;
     background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 235, 210, .09), transparent 45%);
+      rgba(255, 235, 210, .08), transparent 45%);
     opacity: 0; transition: opacity .3s; pointer-events: none;
   }
   .card:hover::after { opacity: 1; }
   /* 顶部呼吸的分类色线 */
   .card::before {
-    content: ""; position: absolute; top: 0; left: 18px; right: 18px; height: 1px;
+    content: ""; position: absolute; top: 0; left: 18px; right: 18px; height: 1px; z-index: 3;
     background: linear-gradient(90deg, transparent, var(--cat), transparent);
     opacity: .35; transition: opacity .3s;
   }
   .card:hover::before { opacity: 1; }
+  .card .body { display: flex; flex-direction: column; gap: 9px; flex: 1; padding: 0 6px; }
 
-  .card .top { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
+  .top { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
   .dot { width: 8px; height: 8px; border-radius: 50%; flex: none;
     background: var(--cat); box-shadow: 0 0 10px var(--cat); }
   .cat-name { color: var(--muted); letter-spacing: .04em; }
   .date { margin-left: auto; color: var(--faint); font-variant-numeric: tabular-nums; }
-  .card h3 { font-size: 17px; font-weight: 800; line-height: 1.45; transform: translateZ(24px); }
+  .card h3 { font-size: 16.5px; font-weight: 800; line-height: 1.45; transform: translateZ(24px); }
   .card h3 a { text-decoration: none; transition: color .2s; }
   .card h3 a:hover { color: var(--accent-2); }
   .card .desc { color: var(--muted); font-size: 13.5px; flex: 1; transform: translateZ(14px); }
-  /* 卡片内本地视频(works.js 的 video 字段):点播、不自动播放,故无需减少动态效果守卫 */
-  .card-video { width: 100%; aspect-ratio: 16 / 9; display: block; border-radius: 10px; background: #000;
-    margin: 2px 0; transform: translateZ(12px); }
-  /* 视频加载失败兜底链接(JS 捕获 error 后替换),占位与播放器同尺寸;无动画故无需守卫 */
-  .video-fallback { display: flex; align-items: center; justify-content: center;
-    width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; background: #000;
-    color: var(--muted); font-size: 13px; text-decoration: none; transform: translateZ(12px); }
-  .video-fallback:hover { color: var(--accent-2); }
-  .card .meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--faint); flex-wrap: wrap; }
+  .meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--faint); flex-wrap: wrap; }
   .heat { color: var(--accent-2); font-variant-numeric: tabular-nums; }
-  .card .actions { display: flex; gap: 8px; align-items: center; margin-top: 2px; transform: translateZ(18px); }
-  .btn {
-    text-decoration: none; font-size: 13px; font-weight: 700;
-    padding: 8px 15px; border-radius: 10px; transition: all .2s;
-    display: inline-flex; align-items: center; gap: 5px;
-  }
-  .btn.primary {
-    background: linear-gradient(135deg, var(--accent), #c05a38); color: #fff;
-    box-shadow: 0 4px 16px rgba(217,119,87,.3);
-  }
-  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(217,119,87,.5); filter: brightness(1.08); }
-  .btn.ghost { border: 1px solid var(--line); color: var(--muted); }
-  .btn.ghost:hover { border-color: var(--accent); color: var(--accent-2); transform: translateY(-2px); }
+  .card .actions { display: flex; gap: 8px; align-items: center; margin-top: 2px; transform: translateZ(18px); flex-wrap: wrap; }
   .star {
     margin-left: auto; background: none; border: none; cursor: pointer;
     font-size: 19px; color: var(--faint); padding: 4px 7px; border-radius: 9px;
@@ -310,6 +410,54 @@
   .empty .big { font-size: 46px; margin-bottom: 14px; animation: floaty 3s ease-in-out infinite; }
   @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-12px) rotate(4deg); } }
 
+  /* ── 放映弹层(页内播放,不跳转) ───────────────────
+     开合过渡 .24s 必须与 JS 侧 MODAL_MS 同步;减少动态效果时 JS 直接跳过等待 */
+  .cinema { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .cinema[hidden] { display: none; }
+  .cinema-backdrop { position: absolute; inset: 0; background: rgba(6,5,4,.88); backdrop-filter: blur(8px);
+    opacity: 0; transition: opacity .24s ease; }
+  .cinema-panel {
+    --cat: var(--accent);
+    position: relative; width: min(1120px, 100%, calc((100vh - 230px) * 1.7778)); min-width: min(600px, 100%);
+    max-height: calc(100vh - 40px); overflow: auto;
+    background: linear-gradient(170deg, #221e18, #15120e);
+    border: 1px solid var(--line-2); border-radius: 18px;
+    box-shadow: 0 40px 120px -20px rgba(0,0,0,.9), 0 0 80px -30px color-mix(in srgb, var(--cat) 50%, transparent);
+    opacity: 0; transform: translateY(16px) scale(.97);
+    transition: opacity .24s ease, transform .24s cubic-bezier(.22,1,.36,1);
+  }
+  .cinema-panel:focus { outline: none; }
+  .cinema.open .cinema-backdrop { opacity: 1; }
+  .cinema.open .cinema-panel { opacity: 1; transform: none; }
+  .cinema-bar { display: flex; align-items: center; gap: 8px; padding: 10px 12px 10px 18px; }
+  .cinema-count { font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+  .cinema-count b { color: var(--accent-2); }
+  .cinema-bar .sp { flex: 1; }
+  .icon-btn {
+    height: 34px; min-width: 34px; padding: 0 12px; border-radius: 10px; cursor: pointer;
+    background: rgba(255,255,255,.04); border: 1px solid var(--line-2); color: var(--muted);
+    font-size: 13px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--text); background: var(--accent-soft); }
+  .icon-btn.close { font-size: 16px; padding: 0; }
+  .cinema-stage { position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: calc(100vh - 230px); background: #000; }
+  .cinema-stage video, .cinema-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: #000; }
+  .cinema-stage video { object-fit: contain; }
+  .cinema-loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 13px; }
+  /* 视频加载失败兜底链接(JS 在 video error 后替换),与舞台同尺寸;无动画故无需守卫 */
+  .video-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: #000; color: var(--muted); font-size: 14px; text-decoration: none; }
+  .video-fallback:hover { color: var(--accent-2); }
+  .cinema-info { display: flex; gap: 20px; align-items: flex-start; padding: 16px 20px 20px; flex-wrap: wrap; }
+  .cinema-text { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 7px; }
+  .cinema-text .top { font-size: 12.5px; }
+  .cinema-text .date { margin-left: 4px; }
+  .cinema-text h2 { font-size: 19px; font-weight: 900; line-height: 1.4; }
+  .cinema-text p { color: var(--muted); font-size: 14px; }
+  .cinema-note { color: var(--faint); font-size: 12px; }
+  .cinema-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
   footer {
     max-width: 1200px; margin: 0 auto; padding: 32px 24px 54px;
     border-top: 1px solid var(--line);
@@ -324,10 +472,18 @@
   @media (max-width: 640px) {
     .hero { padding-top: 40px; }
     .grid { grid-template-columns: 1fr; }
+    .tile { width: 220px; }
+    .reel-nav { display: none; }
+    .cinema { padding: 0; }
+    .cinema-panel { width: 100%; min-width: 0; max-height: 100vh; border-radius: 0; border: none; }
   }
+  @media (hover: none) { .ext-ico { opacity: 1; } }
   @media (prefers-reduced-motion: reduce) {
+    /* 全局一刀切:所有 animation/transition(含放映弹层开合、封面缩放、横栏滚动)都停掉 */
     *, *::before, *::after { animation: none !important; transition: none !important; }
+    html, .reel { scroll-behavior: auto; }
     .card { opacity: 1 !important; }
+    .tile:hover img, .card:hover .cover img { transform: none; }
     #bg3d { display: none; }
   }
 </style>
@@ -345,7 +501,11 @@
   <div class="hero-left">
     <span class="kicker"><span class="pulse"></span>CLAUDE OPUS 5.5 · 发布于 2026-09-22</span>
     <h1>螃蟹的 <span class="grad">Opus 5.5</span> 作品集</h1>
-    <p class="sub">收集网上散落的 Opus 5.5 作品:视频、游戏、艺术、研究与实战应用。本地页面,双击即开,收藏存在你自己的浏览器里。</p>
+    <p class="sub">收集网上散落的 Opus 5.5 作品:视频、游戏、艺术、研究与实战应用。其中 <b id="playCount"></b> 部可以直接在本页观看,点开就放,不用跳转。</p>
+    <div class="cta-row">
+      <button class="btn primary lg" id="ctaPlay" type="button">▶ 开始放映</button>
+      <a class="btn ghost lg" href="#works">浏览全部 <span id="ctaCount"></span> 件 ↓</a>
+    </div>
     <div class="specs">
       <span class="spec">性能 <b>Fable 5.1 级</b></span>
       <span class="spec">运行成本 <b>比 Opus 5 低 40%</b></span>
@@ -369,22 +529,37 @@
   </div>
 </header>
 
+<section class="reel-sec" aria-labelledby="reelTitle">
+  <div class="sec-head">
+    <h2 id="reelTitle"><span>▶</span> 放映厅</h2>
+    <span class="sec-sub" id="reelSub"></span>
+    <div class="reel-nav">
+      <button id="reelPrev" type="button" aria-label="放映厅向左滚动">‹</button>
+      <button id="reelNext" type="button" aria-label="放映厅向右滚动">›</button>
+    </div>
+  </div>
+  <div class="reel" id="reel"></div>
+</section>
+
 <div class="toolbar-wrap">
   <div class="toolbar">
     <div class="toolbar-row">
+      <label class="sr-only" for="search">搜索作品</label>
       <input id="search" type="text" placeholder="搜索作品、描述或标签…(按 / 聚焦,Esc 清空)">
+      <label class="sr-only" for="sort">排序方式</label>
       <select id="sort" class="sort">
         <option value="date">最新发布</option>
         <option value="heat">热度最高</option>
       </select>
-      <button id="favToggle" class="fav-toggle" title="只看收藏">★ 收藏</button>
+      <button id="playToggle" class="toggle" type="button" aria-pressed="false" title="只看能在本页直接观看的作品">▶ 页内可看</button>
+      <button id="favToggle" class="toggle" type="button" aria-pressed="false" title="只看收藏">★ 收藏</button>
     </div>
     <div class="chips" id="chips"></div>
   </div>
 </div>
 
-<main>
-  <div class="result-line" id="resultLine"></div>
+<main id="works">
+  <div class="result-line" id="resultLine" aria-live="polite"></div>
   <div class="grid" id="grid"></div>
   <div class="empty" id="empty">
     <div class="big">🦀</div>
@@ -393,9 +568,34 @@
 </main>
 
 <footer>
-  <p class="tip">➕ 新增作品:用编辑器打开 <code>works.js</code>,复制任意一条记录改字段即可,刷新页面生效(字段说明见 <code>README.md</code>)。</p>
-  <p>数据来源:Hacker News(Algolia API)、Anthropic 官网、人工整理 · 收录截至 2026-09-28 · 共 <span id="footCount"></span> 件作品</p>
+  <p class="tip">➕ 新增作品:用编辑器打开 <code>works.js</code>,复制任意一条记录改字段即可,刷新页面生效(字段说明见 <code>README.md</code>)。本地视频与封面放在 <code>media/</code>。</p>
+  <p>数据来源:Hacker News(Algolia API)、Anthropic 官网、X、bilibili、人工整理 · 收录截至 2026-09-30 · 共 <span id="footCount"></span> 件作品</p>
 </footer>
+</div>
+
+<!-- 放映弹层:本地 mp4 用 <video>,网页类作品(embed 字段)用 iframe -->
+<div class="cinema" id="cinema" role="dialog" aria-modal="true" aria-labelledby="cinemaTitle" hidden>
+  <div class="cinema-backdrop" data-close></div>
+  <div class="cinema-panel" id="cinemaPanel" tabindex="-1">
+    <div class="cinema-bar">
+      <span class="cinema-count" id="cinemaCount"></span>
+      <span class="sp"></span>
+      <button class="icon-btn" id="cinemaPrev" type="button" aria-label="上一部(←)" title="上一部(←)">‹ 上一部</button>
+      <button class="icon-btn" id="cinemaNext" type="button" aria-label="下一部(→)" title="下一部(→)">下一部 ›</button>
+      <button class="icon-btn close" type="button" data-close aria-label="关闭(Esc)" title="关闭(Esc)">✕</button>
+    </div>
+    <div class="cinema-stage" id="cinemaStage"></div>
+    <div class="cinema-info">
+      <div class="cinema-text">
+        <div class="top"><span class="dot"></span><span class="cat-name" id="cinemaCat"></span><span class="date" id="cinemaDate"></span></div>
+        <h2 id="cinemaTitle"></h2>
+        <p id="cinemaDesc"></p>
+        <div class="meta" id="cinemaMeta"></div>
+        <div class="cinema-note" id="cinemaNote"></div>
+      </div>
+      <div class="cinema-actions" id="cinemaActions"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -410,6 +610,7 @@
     official: { name: "官方·讨论", color: "var(--official)" }
   };
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var bgPaused = false; // 放映弹层打开时暂停星域绘制,把性能让给视频
 
   /* ═══ 3D 粒子星域背景 ═══════════════════════════ */
   (function starfield() {
@@ -453,6 +654,7 @@
     for (bi = 0; bi < COLORS.length * 3; bi++) dots.push([]);
     for (bi = 0; bi < 3; bi++) lines.push([]);
     function frame() {
+      if (bgPaused) { requestAnimationFrame(frame); return; } // 弹层遮住了背景,停画省 CPU/GPU
       t += .0016;
       mx += (tx - mx) * .04; my += (ty - my) * .04;
       ctx.clearRect(0, 0, W, H);
@@ -548,23 +750,46 @@
   try { favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); }
   catch (e) { favs = new Set(); }
 
-  var state = { cat: "all", q: "", sort: "date", favOnly: false };
+  var state = { cat: "all", q: "", sort: "date", favOnly: false, playOnly: false };
 
   var $grid = document.getElementById("grid");
   var $chips = document.getElementById("chips");
   var $search = document.getElementById("search");
   var $sort = document.getElementById("sort");
   var $favToggle = document.getElementById("favToggle");
+  var $playToggle = document.getElementById("playToggle");
   var $empty = document.getElementById("empty");
   var $resultLine = document.getElementById("resultLine");
+  var $reel = document.getElementById("reel");
+
+  var byId = {};
+  window.WORKS.forEach(function (w) { byId[w.id] = w; });
+
+  function isHttp(s) { return /^https?:\/\//i.test(String(s || "")); }
+  // 能在本页直接看:有本地视频,或有可内嵌的网页(embed 只收 http(s),防 javascript: 进 iframe)
+  function playable(w) { return !!(w.video || (w.embed && isHttp(w.embed))); }
+  function byDateDesc(a, b) { return a.date === b.date ? 0 : (a.date < b.date ? 1 : -1); }
+  function fmtDur(sec) {
+    var m = Math.floor(sec / 60), s = Math.round(sec % 60);
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  function catOf(w) { return CATS[w.cat] || CATS.official; }
+
+  // 放映顺序:所有可页内观看的作品,按日期新→旧(弹层里上一部/下一部按此顺序走)
+  var PLAY = window.WORKS.filter(playable).sort(byDateDesc);
+  var playIndex = {};
+  PLAY.forEach(function (w, i) { playIndex[w.id] = i; });
 
   document.getElementById("footCount").textContent = window.WORKS.length;
+  document.getElementById("ctaCount").textContent = window.WORKS.length;
+  document.getElementById("playCount").textContent = PLAY.length;
+  document.getElementById("reelSub").textContent = PLAY.length + " 部 · 点开即在本页播放,← → 切换";
 
   var counts = { all: window.WORKS.length };
   window.WORKS.forEach(function (w) { counts[w.cat] = (counts[w.cat] || 0) + 1; });
   var chipList = [["all", "全部"]].concat(Object.keys(CATS).map(function (k) { return [k, CATS[k].name]; }));
   $chips.innerHTML = chipList.map(function (c) {
-    return '<button class="chip' + (c[0] === "all" ? " active" : "") + '" data-cat="' + c[0] + '">' +
+    return '<button class="chip' + (c[0] === "all" ? " active" : "") + '" type="button" data-cat="' + c[0] + '">' +
            c[1] + '<span class="n">' + (counts[c[0]] || 0) + "</span></button>";
   }).join("");
   $chips.addEventListener("click", function (e) {
@@ -580,14 +805,16 @@
     if (e.key === "Escape") { $search.value = ""; state.q = ""; render(); $search.blur(); }
   });
   $sort.addEventListener("change", function () { state.sort = $sort.value; render(); });
-  $favToggle.addEventListener("click", function () {
-    state.favOnly = !state.favOnly;
-    $favToggle.classList.toggle("active", state.favOnly);
-    render();
-  });
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "/" && document.activeElement !== $search) { e.preventDefault(); $search.focus(); }
-  });
+  function bindToggle($btn, key) {
+    $btn.addEventListener("click", function () {
+      state[key] = !state[key];
+      $btn.classList.toggle("active", state[key]);
+      $btn.setAttribute("aria-pressed", state[key] ? "true" : "false");
+      render();
+    });
+  }
+  bindToggle($favToggle, "favOnly");
+  bindToggle($playToggle, "playOnly");
 
   function saveFavs() {
     try { localStorage.setItem(FAV_KEY, JSON.stringify(Array.from(favs))); } catch (e) {}
@@ -613,6 +840,7 @@
     var list = window.WORKS.filter(function (w) {
       if (state.cat !== "all" && w.cat !== state.cat) return false;
       if (state.favOnly && !favs.has(w.id)) return false;
+      if (state.playOnly && !playable(w)) return false;
       if (state.q) {
         var hay = (w.title + " " + w.desc + " " + (w.tags || []).join(" ") + " " + w.source).toLowerCase();
         if (hay.indexOf(state.q) === -1) return false;
@@ -621,40 +849,69 @@
     });
     list.sort(function (a, b) {
       if (state.sort === "heat") {
-        return ((b.pts || 0) - (a.pts || 0)) || (a.date === b.date ? 0 : (a.date < b.date ? 1 : -1));
+        return ((b.pts || 0) - (a.pts || 0)) || byDateDesc(a, b);
       }
-      return a.date === b.date ? 0 : (a.date < b.date ? 1 : -1);
+      return byDateDesc(a, b);
     });
     return list;
   }
 
-  function resultText(n) {
-    return "共 <b>" + n + "</b> 件作品" +
-      (state.favOnly ? "(仅收藏)" : "") + (state.q ? " · 匹配「" + esc($search.value.trim()) + "」" : "");
+  function resultText(list) {
+    var np = 0;
+    list.forEach(function (w) { if (playable(w)) np++; });
+    return "共 <b>" + list.length + "</b> 件作品" + (state.favOnly ? "(仅收藏)" : "") +
+      (np ? " · 其中 " + np + " 件可页内观看" : "") +
+      (state.q ? " · 匹配「" + esc($search.value.trim()) + "」" : "");
+  }
+
+  /* 封面内层:有 poster 用图片(加载失败自动换生成封面),没有就直接出生成封面 */
+  function genCover(w) {
+    return '<span class="gen"><b>' + esc(w.source) + "</b><i>" + catOf(w).name + "</i></span>";
+  }
+  function coverInner(w) {
+    if (!w.poster) return genCover(w);
+    return '<img src="' + esc(w.poster) + '" alt="" loading="lazy" decoding="async" data-gen-id="' + esc(w.id) + '">';
+  }
+  function badge(w) {
+    if (w.video) return w.dur ? '<span class="badge">' + fmtDur(w.dur) + "</span>" : "";
+    return '<span class="badge web">互动网页</span>';
   }
 
   function render() {
     var list = filtered();
-    $resultLine.innerHTML = resultText(list.length);
+    $resultLine.innerHTML = resultText(list);
     $empty.style.display = list.length ? "none" : "block";
     $grid.innerHTML = list.map(function (w, i) {
-      var cat = CATS[w.cat] || CATS.official;
+      var cat = catOf(w);
+      var canPlay = playable(w);
       var heat = w.pts ? '<span class="heat">▲ ' + w.pts + (w.cmt ? " · " + w.cmt + " 评" : "") + "</span>" : "";
       var discussBtn = (w.discuss && w.discuss !== w.url)
         ? '<a class="btn ghost" href="' + esc(w.discuss) + '" target="_blank" rel="noopener">讨论</a>' : "";
+      var cover = canPlay
+        ? '<button class="cover" type="button" data-play="' + esc(w.id) + '" aria-label="在本页播放:' + esc(w.title) + '">' +
+            coverInner(w) + '<span class="play-ico" aria-hidden="true">▶</span>' + badge(w) + "</button>"
+        // 非播放类封面与标题链接重复,不进 Tab 序、不进读屏
+        : '<a class="cover" href="' + esc(w.url) + '" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">' +
+            coverInner(w) + '<span class="ext-ico">访问 ↗</span></a>';
+      var titleLink = '<a href="' + esc(w.url) + '" target="_blank" rel="noopener"' +
+        (canPlay ? ' data-play="' + esc(w.id) + '"' : "") + ">" + esc(w.title) + "</a>";
+      var mainBtns = canPlay
+        ? '<button class="btn primary" type="button" data-play="' + esc(w.id) + '">▶ 页内播放</button>' +
+          '<a class="btn ghost" href="' + esc(w.url) + '" target="_blank" rel="noopener">原址 ↗</a>'
+        : '<a class="btn primary" href="' + esc(w.url) + '" target="_blank" rel="noopener">访问作品 ↗</a>';
       return '<article class="card" style="--cat:' + cat.color + ';--d:' + Math.min(i * 45, 500) + 'ms">' +
-        '<div class="top"><span class="dot"></span>' +
-          '<span class="cat-name">' + cat.name + '</span><span class="date">' + esc(w.date) + "</span></div>" +
-        '<h3><a href="' + esc(w.url) + '" target="_blank" rel="noopener">' + esc(w.title) + "</a></h3>" +
-        '<p class="desc">' + esc(w.desc) + "</p>" +
-        (w.video ? '<video class="card-video" controls preload="metadata" playsinline src="' + esc(w.video) + '" data-fallback="' + esc(w.url) + '"></video>' : "") +
-        '<div class="meta"><span>' + esc(w.source) + "</span>" + heat + "</div>" +
-        '<div class="actions">' +
-          '<a class="btn primary" href="' + esc(w.url) + '" target="_blank" rel="noopener">访问作品 ↗</a>' +
-          discussBtn +
-          '<button class="star' + (favs.has(w.id) ? " on" : "") + '" data-id="' + w.id +
-            '" title="收藏" aria-label="收藏" aria-pressed="' + (favs.has(w.id) ? "true" : "false") + '">' +
-            (favs.has(w.id) ? "★" : "☆") + "</button>" +
+        cover +
+        '<div class="body">' +
+          '<div class="top"><span class="dot"></span>' +
+            '<span class="cat-name">' + cat.name + '</span><span class="date">' + esc(w.date) + "</span></div>" +
+          "<h3>" + titleLink + "</h3>" +
+          '<p class="desc">' + esc(w.desc) + "</p>" +
+          '<div class="meta"><span>' + esc(w.source) + "</span>" + heat + "</div>" +
+          '<div class="actions">' + mainBtns + discussBtn +
+            '<button class="star' + (favs.has(w.id) ? " on" : "") + '" type="button" data-id="' + esc(w.id) +
+              '" title="收藏" aria-label="收藏" aria-pressed="' + (favs.has(w.id) ? "true" : "false") + '">' +
+              (favs.has(w.id) ? "★" : "☆") + "</button>" +
+          "</div>" +
         "</div></article>";
     }).join("");
     needsCheck = true; // 强制下一帧重查可见性,让新卡片带 stagger 入场
@@ -666,6 +923,42 @@
     });
   }
 
+  /* 放映厅横栏:只建一次,不随筛选变化 */
+  $reel.innerHTML = PLAY.map(function (w) {
+    var cat = catOf(w);
+    return '<button class="tile" type="button" data-play="' + esc(w.id) + '" style="--cat:' + cat.color + '">' +
+      '<span class="shot">' + coverInner(w) + '<span class="play-ico" aria-hidden="true">▶</span>' + badge(w) + "</span>" +
+      '<span class="tile-title">' + esc(w.title) + "</span>" +
+      '<span class="tile-cat"><span class="dot"></span>' + cat.name + " · " + esc(w.source) + "</span>" +
+    "</button>";
+  }).join("");
+  var $reelPrev = document.getElementById("reelPrev"), $reelNext = document.getElementById("reelNext");
+  function syncReelNav() {
+    var max = $reel.scrollWidth - $reel.clientWidth;
+    $reelPrev.disabled = $reel.scrollLeft <= 4;
+    $reelNext.disabled = $reel.scrollLeft >= max - 4;
+  }
+  function scrollReel(dir) {
+    // 平滑滚动属动效:减少动态效果时直接跳(CSS 侧 .reel 也同步关掉 scroll-behavior)
+    $reel.scrollBy({ left: dir * $reel.clientWidth * .8, behavior: reduceMotion ? "auto" : "smooth" });
+  }
+  $reelPrev.addEventListener("click", function () { scrollReel(-1); });
+  $reelNext.addEventListener("click", function () { scrollReel(1); });
+  $reel.addEventListener("scroll", syncReelNav, { passive: true });
+  window.addEventListener("resize", syncReelNav);
+  syncReelNav();
+
+  /* 封面图加载失败 → 换成生成封面(error 不冒泡,用捕获统一接) */
+  document.addEventListener("error", function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== "IMG" || !img.hasAttribute("data-gen-id")) return;
+    var w = byId[img.getAttribute("data-gen-id")];
+    if (!w) return;
+    var tmp = document.createElement("span");
+    tmp.innerHTML = genCover(w);
+    img.replaceWith(tmp.firstChild);
+  }, true);
+
   /* 卡片 3D 倾斜 + 流光跟随 */
   $grid.addEventListener("pointermove", function (e) {
     if (e.pointerType === "touch") return; // 触屏跟手滚动时不做倾斜,否则卡片会跟着手指乱晃
@@ -674,8 +967,8 @@
     var r = card.getBoundingClientRect();
     var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
     card.style.transform =
-      "perspective(900px) rotateX(" + ((.5 - y) * 9).toFixed(2) + "deg) rotateY(" +
-      ((x - .5) * 11).toFixed(2) + "deg) translateY(-5px) scale(1.014)";
+      "perspective(900px) rotateX(" + ((.5 - y) * 7).toFixed(2) + "deg) rotateY(" +
+      ((x - .5) * 9).toFixed(2) + "deg) translateY(-5px) scale(1.012)";
     card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
     card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
   }, { passive: true });
@@ -717,27 +1010,167 @@
     }
   });
 
-  /* 视频加载失败兜底:media error 事件不冒泡,在网格上用捕获统一接。
-     避免 file:// 万一被浏览器限制时,用户面对无提示的黑屏播放器 */
-  $grid.addEventListener("error", function (e) {
-    var v = e.target;
-    if (!v || v.tagName !== "VIDEO") return;
-    var link = document.createElement("a");
-    link.className = "video-fallback";
-    link.href = v.getAttribute("data-fallback"); // 渲染时写入的原址链接,不依赖 src 反查
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.textContent = "本地视频加载失败,去原址观看 ↗";
-    v.replaceWith(link);
-  }, true);
-
   // 只看收藏模式下移除一张卡片后,同步计数与空态(不重绘其余卡片)
   function syncFavView() {
-    var n = filtered().length;
-    $resultLine.innerHTML = resultText(n);
-    $empty.style.display = n ? "none" : "block";
+    var list = filtered();
+    $resultLine.innerHTML = resultText(list);
+    $empty.style.display = list.length ? "none" : "block";
     needsCheck = true; // 移除让网格向上回流,可能有未入场卡片移进视口,下一帧重查
   }
+
+  /* ═══ 放映弹层 ══════════════════════════════════ */
+  var MODAL_MS = 240; // 开合过渡时长,须与 CSS .cinema-backdrop/.cinema-panel 的 .24s 同步改
+  var $cinema = document.getElementById("cinema");
+  var $cPanel = document.getElementById("cinemaPanel");
+  var $cStage = document.getElementById("cinemaStage");
+  var $cCount = document.getElementById("cinemaCount");
+  var $cCat = document.getElementById("cinemaCat");
+  var $cDate = document.getElementById("cinemaDate");
+  var $cTitle = document.getElementById("cinemaTitle");
+  var $cDesc = document.getElementById("cinemaDesc");
+  var $cMeta = document.getElementById("cinemaMeta");
+  var $cNote = document.getElementById("cinemaNote");
+  var $cActions = document.getElementById("cinemaActions");
+  var cinemaOpen = false, cur = 0, closeTimer = null, lastTrigger = null;
+
+  function showWork(idx) {
+    cur = (idx + PLAY.length) % PLAY.length;
+    var w = PLAY[cur], cat = catOf(w);
+    $cPanel.style.setProperty("--cat", cat.color);
+    $cCount.innerHTML = "放映厅 <b>" + (cur + 1) + "</b> / " + PLAY.length;
+    $cCat.textContent = cat.name;
+    $cDate.textContent = w.date;
+    $cTitle.textContent = w.title;
+    $cDesc.textContent = w.desc;
+    $cMeta.innerHTML = "<span>" + esc(w.source) + "</span>" +
+      (w.dur ? "<span>时长 " + fmtDur(w.dur) + "</span>" : "") +
+      (w.pts ? '<span class="heat">▲ ' + w.pts + (w.cmt ? " · " + w.cmt + " 评" : "") + "</span>" : "");
+    $cActions.innerHTML =
+      '<a class="btn ghost" href="' + esc(w.url) + '" target="_blank" rel="noopener">原址 ↗</a>' +
+      ((w.discuss && w.discuss !== w.url)
+        ? '<a class="btn ghost" href="' + esc(w.discuss) + '" target="_blank" rel="noopener">讨论</a>' : "");
+
+    if (w.video) {
+      $cNote.textContent = "▶ 观看 · 空格 暂停/播放 · F 全屏 · ← → 上一部/下一部 · Esc 关闭（本地无视频文件时自动跳转原作）";
+      // 每次都新建 video 元素:换片时旧的自动停掉,error 监听也不会串台
+      $cStage.innerHTML = '<video controls playsinline preload="auto"' +
+        (w.poster ? ' poster="' + esc(w.poster) + '"' : "") + ' src="' + esc(w.video) + '"></video>';
+      var v = $cStage.firstChild;
+      v.addEventListener("error", function () {
+        // 本地文件缺失/损坏时给原址兜底,而不是一块无提示的黑屏。
+        // 同学 clone 后不带 media/(视频不入库),就会走这里 → 点开跳到原作者页面观看。
+        var link = document.createElement("a");
+        link.className = "video-fallback";
+        link.href = w.url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "▶ 在线观看原作 · " + (w.source || "原站") + " ↗";
+        v.replaceWith(link);
+      });
+      // 用户点了「播放」才走到这里,属于点播(不是 autoplay 属性);被浏览器拦截也无妨,控件还在
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    } else {
+      $cNote.textContent = "外部网页内嵌运行,需要联网;显示异常可点「原址 ↗」";
+      $cStage.innerHTML = '<div class="cinema-loading">正在载入外部网页…(需联网)</div>' +
+        '<iframe src="' + esc(w.embed) + '" title="' + esc(w.title) + '" allow="fullscreen; autoplay"' +
+        ' sandbox="allow-scripts allow-same-origin allow-popups allow-pointer-lock" referrerpolicy="no-referrer"></iframe>';
+      var fr = $cStage.querySelector("iframe");
+      fr.addEventListener("load", function () {
+        var ld = $cStage.querySelector(".cinema-loading");
+        if (ld) ld.remove();
+      });
+    }
+  }
+
+  // 焦点落在面板本身:这样 ←/→ 切片、空格暂停、F 全屏都由我们统一处理,不被原生控件吞掉
+  function focusInCinema() { $cPanel.focus({ preventScroll: true }); }
+  function curVideo() { return $cStage.querySelector("video"); }
+
+  function openCinema(id, trigger) {
+    if (!(id in playIndex)) return;
+    clearTimeout(closeTimer);
+    lastTrigger = trigger || document.activeElement;
+    showWork(playIndex[id]);
+    if (!cinemaOpen) {
+      cinemaOpen = true;
+      $cinema.hidden = false;
+      void $cinema.offsetWidth; // 先落地 display 再加 .open,过渡才会生效
+      $cinema.classList.add("open");
+      document.documentElement.classList.add("modal-open");
+      bgPaused = true;
+    }
+    focusInCinema();
+  }
+
+  function closeCinema() {
+    if (!cinemaOpen) return;
+    cinemaOpen = false;
+    $cinema.classList.remove("open");
+    document.documentElement.classList.remove("modal-open");
+    bgPaused = false;
+    var v = curVideo();
+    if (v) v.pause();
+    clearTimeout(closeTimer);
+    // 等退场过渡播完再卸载;减少动态效果时没有过渡,立即收起
+    closeTimer = setTimeout(function () {
+      $cinema.hidden = true;
+      $cStage.innerHTML = ""; // 卸掉 video/iframe,彻底停止播放与网络
+    }, reduceMotion ? 0 : MODAL_MS);
+    if (lastTrigger && document.body.contains(lastTrigger)) lastTrigger.focus({ preventScroll: true });
+  }
+
+  function navCinema(step) { showWork(cur + step); focusInCinema(); }
+  document.getElementById("cinemaPrev").addEventListener("click", function () { navCinema(-1); });
+  document.getElementById("cinemaNext").addEventListener("click", function () { navCinema(1); });
+  $cinema.addEventListener("click", function (e) {
+    if (e.target.closest("[data-close]")) closeCinema();
+  });
+
+  // 任何 data-play 元素(卡片封面/按钮/标题、放映厅、首屏按钮)点击都在页内放映。
+  // 标题链接保留 href:Ctrl/中键点击仍可新标签打开原址
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-play]");
+    if (!el) return;
+    if (el.tagName === "A" && (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0)) return;
+    e.preventDefault();
+    openCinema(el.getAttribute("data-play"), el);
+  });
+  document.getElementById("ctaPlay").addEventListener("click", function () {
+    if (PLAY.length) openCinema(PLAY[0].id, this);
+  });
+
+  function trapTab(e) {
+    var els = Array.prototype.filter.call(
+      $cPanel.querySelectorAll("button, a[href], video, iframe"),
+      function (el) { return !el.disabled && el.offsetParent !== null; });
+    if (!els.length) return;
+    var first = els[0], last = els[els.length - 1], a = document.activeElement;
+    if (!$cPanel.contains(a)) { e.preventDefault(); first.focus(); }
+    else if (a === $cPanel) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+    else if (e.shiftKey && a === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (cinemaOpen) {
+      if (e.key === "Escape") { e.preventDefault(); closeCinema(); return; }
+      if (e.key === "Tab") { trapTab(e); return; }
+      var tag = e.target.tagName, v = curVideo();
+      if ((e.key === "f" || e.key === "F") && v && v.requestFullscreen) { v.requestFullscreen(); return; }
+      if (tag === "VIDEO") return; // 用户点进播放器后,方向键/空格交还给原生控件(快进快退、暂停)
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault(); navCinema(e.key === "ArrowLeft" ? -1 : 1); return;
+      }
+      if (e.key === " " && tag !== "BUTTON" && tag !== "A" && v) {
+        e.preventDefault();
+        if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause();
+        return;
+      }
+      return; // 弹层打开时不响应 "/" 等页面快捷键
+    }
+    if (e.key === "/" && document.activeElement !== $search) { e.preventDefault(); $search.focus(); }
+  });
 
   render();
 })();

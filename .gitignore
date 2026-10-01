@@ -3,3 +3,10 @@
 
 # 本地视频素材：多为他人作品片段，涉及版权，不对外分发；页面按路径引用本地文件
 media/*.mp4
+
+# 项目星球注册（本机配置，不对外）
+atlas-project.json
+
+# 工作记录与 agent 指南不入库（含本机路径）
+WORKLOG.md
+AGENTS.md

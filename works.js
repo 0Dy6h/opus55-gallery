@@ -12,6 +12,7 @@ window.WORKS = [
     title: "Claude Opus 5.5 官方发布页",
     cat: "official", url: "https://www.anthropic.com/claude-opus-5-5",
     discuss: "https://news.ycombinator.com/item?id=49803892",
+    poster: "media/official-release.jpg",
     date: "2026-09-22", source: "anthropic.com", pts: 1802, cmt: 1129,
     desc: "Anthropic 官方发布:多数工作达到 Fable 5.1 水平、运行成本比 Opus 5 低 40%,发布即成为付费档默认模型。",
     tags: ["发布", "benchmark", "定价"]
@@ -21,6 +22,7 @@ window.WORKS = [
     title: "官方「早期探索」作品串",
     cat: "official", url: "https://twitter.com/claudeai/status/2102471866635919731",
     discuss: null,
+    video: "media/official-thread.mp4", poster: "media/official-thread.jpg", dur: 29,
     date: "2026-09-23", source: "twitter.com", pts: null, cmt: null,
     desc: "Anthropic 官方账号汇总的第一波 5.5 探索作品帖,评论区本身就是一部迷你作品集。",
     tags: ["官方", "合集", "推特"]
@@ -30,6 +32,7 @@ window.WORKS = [
     title: "官方模型文档:Opus 5.5 Overview",
     cat: "official", url: "https://platform.claude.com/docs/en/models/opus-5-5/overview",
     discuss: null,
+    poster: "media/official-docs.jpg",
     date: "2026-09-22", source: "platform.claude.com", pts: null, cmt: null,
     desc: "平台文档:模型规格、thinking 模式说明(不可关闭)、用法与限额。",
     tags: ["文档", "API"]
@@ -39,6 +42,7 @@ window.WORKS = [
     title: "Getting the most out of Opus 5.5(官方上手指南)",
     cat: "official", url: "https://claude.dev/blog/getting-the-most-out-of-opus-5-5/",
     discuss: "https://news.ycombinator.com/item?id=49807462",
+    poster: "media/official-blog.jpg",
     date: "2026-09-22", source: "claude.dev", pts: 3, cmt: 0,
     desc: "官方博客教你在 Claude 与 Claude Code 里把 5.5 用到位:提示词与工作流建议。",
     tags: ["指南", "Claude Code"]
@@ -57,6 +61,7 @@ window.WORKS = [
     title: "官方提示词指南:Prompting Claude Opus 5.5",
     cat: "official", url: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
     discuss: "https://news.ycombinator.com/item?id=49874728",
+    poster: "media/official-prompting.jpg",
     date: "2026-09-28", source: "platform.claude.com", pts: 91, cmt: 83,
     desc: "官方提示词工程指南:thinking 常开时怎么写提示、effort 档位怎么选,发布当天冲上 HN 前排。",
     tags: ["提示词", "官方", "指南"]
@@ -68,6 +73,7 @@ window.WORKS = [
     title: "Opus 5.5 is good at explainer videos",
     cat: "video", url: "https://launchvideo.io",
     discuss: "https://news.ycombinator.com/item?id=49836374",
+    video: "media/explainer-videos.mp4", poster: "media/explainer-videos.jpg", dur: 26,
     date: "2026-09-24", source: "launchvideo.io", pts: 423, cmt: 221,
     desc: "5.5 一条龙生成讲解视频:脚本、画面、配音全包。发布一周内 HN 最火的 5.5 作品帖。",
     tags: ["视频", "讲解视频", "爆款"]
@@ -77,7 +83,7 @@ window.WORKS = [
     title: "《Clippy 的复仇》短片",
     cat: "video", url: "https://www.youtube.com/watch?v=qUaBObmpYTI",
     discuss: "https://news.ycombinator.com/item?id=49839100",
-    video: "media/clippy-revenge.mp4",
+    video: "media/clippy-revenge.mp4", poster: "media/clippy-revenge.jpg", dur: 90,
     date: "2026-09-25", source: "youtube.com", pts: 1, cmt: 1,
     desc: "Show HN:完全由 Opus 5.5 制作的短片,大眼夹复仇记。",
     tags: ["视频", "短片", "YouTube"]
@@ -87,6 +93,7 @@ window.WORKS = [
     title: "2 小时做出宝可梦同人预告片",
     cat: "video", url: "https://gist.github.com/f-trycua/611526d75a4fd2fd5f80e630e2116239",
     discuss: "https://news.ycombinator.com/item?id=49859211",
+    video: "media/pokemon-trailer.mp4", poster: "media/pokemon-trailer.jpg", dur: 20,
     date: "2026-09-26", source: "gist.github.com", pts: 2, cmt: 2,
     desc: "全流程记录:用 5.5 在两小时内产出宝可梦同人预告片。",
     tags: ["视频", "预告片", "教程向"]
@@ -96,6 +103,7 @@ window.WORKS = [
     title: "给副业做的一条怪趣广告片",
     cat: "video", url: "https://www.reddit.com/r/ClaudeAI/comments/1wptwrk/",
     discuss: "https://news.ycombinator.com/item?id=49843290",
+    video: "media/side-hustle-ad.mp4", poster: "media/side-hustle-ad.jpg", dur: 45,
     date: "2026-09-25", source: "reddit.com", pts: 2, cmt: 0,
     desc: "r/ClaudeAI 网友用 5.5 给自己的 side hustle 制作的 whimsical 风格视频广告。",
     tags: ["视频", "广告", "副业"]
@@ -105,6 +113,7 @@ window.WORKS = [
     title: "《奥兹曼迪亚斯》电影级浏览器动画",
     cat: "video", url: "https://www.echohive.ai/ozymandias",
     discuss: "https://news.ycombinator.com/item?id=49812002",
+    embed: "https://www.echohive.ai/ozymandias", poster: "media/ozymandias.jpg",
     date: "2026-09-23", source: "echohive.ai", pts: 1, cmt: 0,
     desc: "把雪莱名诗《Ozymandias》变成可直接在浏览器播放的电影化动画。",
     tags: ["动画", "诗歌", "浏览器"]
@@ -114,6 +123,7 @@ window.WORKS = [
     title: "2.5D 视差互动战斗场景《The Golden Ford》",
     cat: "video", url: "https://www.echohive.ai/experiments/the-golden-ford",
     discuss: "https://news.ycombinator.com/item?id=49835099",
+    embed: "https://www.echohive.ai/experiments/the-golden-ford", poster: "media/parallax-battle.jpg",
     date: "2026-09-24", source: "echohive.ai", pts: 2, cmt: 0,
     desc: "5.5 生成的 2.5D 视差滚动互动战斗场景实验。",
     tags: ["动画", "2.5D", "互动"]
@@ -123,6 +133,7 @@ window.WORKS = [
     title: "沙动画:两分钟讲完美国 250 年",
     cat: "video", url: "https://twitter.com/Michaelzsguo/status/2102592355165782312",
     discuss: null,
+    video: "media/sand-history.mp4", poster: "media/sand-history.jpg", dur: 120,
     date: "2026-09-23", source: "twitter.com", pts: null, cmt: null,
     desc: "Michael Guo 用 5.5 制作的 2 分钟沙画动画,从 1776 年一口气推到 2026 年的烟火,配乐音效齐全。",
     tags: ["沙画", "动画", "历史"]
@@ -132,6 +143,7 @@ window.WORKS = [
     title: "单 HTML 文件的 WebGL2 马赛克动画短片",
     cat: "video", url: "https://twitter.com/LCSlates/status/2102503027340988559",
     discuss: null,
+    video: "media/mosaic-film.mp4", poster: "media/mosaic-film.jpg", dur: 80,
     date: "2026-09-23", source: "twitter.com", pts: null, cmt: null,
     desc: "80 秒短片纯靠一页 HTML + WebGL2 实现:玻璃与金箔马赛克聚成鱼、鹤与鸽,含昼夜与星座转场,零外部资源。",
     tags: ["WebGL", "短片", "生成艺术"]
@@ -141,7 +153,7 @@ window.WORKS = [
     title: "线性代数宣传片:Opus 5.5 一轮对话直出",
     cat: "video", url: "https://www.bilibili.com/video/BV1hphd69EDA",
     discuss: null,
-    video: "media/lin-alg-trailer.mp4",
+    video: "media/lin-alg-trailer.mp4", poster: "media/lin-alg-trailer.jpg", dur: 214,
     date: "2026-09-27", source: "bilibili.com", pts: null, cmt: null,
     desc: "B站 UP「输入偏移」用 5.5 一轮对话直出的线性代数宣传片:1080p 数学动画配乐齐全,标题自述「眩晕瘫坐」。",
     tags: ["视频", "B站", "数学动画"]
@@ -151,10 +163,60 @@ window.WORKS = [
     title: "吓哭了!Opus 5.5 AGI 概念 MV",
     cat: "video", url: "https://www.bilibili.com/video/BV18ta86EEHb",
     discuss: null,
-    video: "media/agi-concept-mv.mp4",
+    video: "media/agi-concept-mv.mp4", poster: "media/agi-concept-mv.jpg", dur: 157,
     date: "2026-09-27", source: "bilibili.com", pts: null, cmt: null,
     desc: "B站 UP「白雪仅当雪白」用 5.5 制作的 AGI 主题概念 MV。",
     tags: ["视频", "B站", "MV"]
+  },
+  {
+    id: "quantum-mechanics",
+    title: "问 Opus 5.5 什么是量子力学,它直接做了个视频",
+    cat: "video", url: "https://www.bilibili.com/video/BV1a3av6eEuH",
+    discuss: null,
+    video: "media/quantum-mechanics.mp4", poster: "media/quantum-mechanics.jpg", dur: 316,
+    date: "2026-09-28", source: "bilibili.com", pts: null, cmt: null,
+    desc: "B站 UP「Dyno_Earth」一句提问换来 5 分钟 1080p 量子力学科普动画,3.3 万播放,热评「做了六年后期,这下真是眩晕瘫坐了」。",
+    tags: ["视频", "B站", "科普", "物理"]
+  },
+  {
+    id: "kaoyan-408",
+    title: "Opus 5.5 一句话核爆考研 408 统考动画 MV",
+    cat: "video", url: "https://www.bilibili.com/video/BV12kae6WEPT",
+    discuss: null,
+    video: "media/kaoyan-408.mp4", poster: "media/kaoyan-408.jpg", dur: 157,
+    date: "2026-09-28", source: "bilibili.com", pts: null, cmt: null,
+    desc: "B站 UP「Bemly_」让 5.5 一句话生成的考研 408 统考动画 MV,157 秒 1080p,1.3 万播放。",
+    tags: ["视频", "B站", "MV", "考研"]
+  },
+  {
+    id: "relativity-intro",
+    title: "Opus 5.5 绝美相对论介绍",
+    cat: "video", url: "https://www.bilibili.com/video/BV1oCaq6nEqy",
+    discuss: null,
+    video: "media/relativity-intro.mp4", poster: "media/relativity-intro.jpg", dur: 257,
+    date: "2026-09-28", source: "bilibili.com", pts: null, cmt: null,
+    desc: "B站 UP「qayqaq」用 5.5 制作的相对论视觉化介绍,257 秒 1080p,1.2 万播放。",
+    tags: ["视频", "B站", "科普", "物理"]
+  },
+  {
+    id: "ai-history",
+    title: "从现在看过去:Opus 5.5 生成 AI 简史",
+    cat: "video", url: "https://www.bilibili.com/video/BV1H8av6HEYs",
+    discuss: null,
+    video: "media/ai-history.mp4", poster: "media/ai-history.jpg", dur: 390,
+    date: "2026-09-28", source: "bilibili.com", pts: null, cmt: null,
+    desc: "B站 UP「铼夏LAYccc」用 5.5 制作的 AI 简史短片《从现在看过去》,6 分半 1080p,2.2 万播放。",
+    tags: ["视频", "B站", "科普", "AI史"]
+  },
+  {
+    id: "never-seen-sun",
+    title: "Opus 5.5 生成短片《我从未见过太阳》",
+    cat: "video", url: "https://www.bilibili.com/video/BV1b9ad6xEnD",
+    discuss: null,
+    video: "media/never-seen-sun.mp4", poster: "media/never-seen-sun.jpg", dur: 272,
+    date: "2026-09-30", source: "bilibili.com", pts: null, cmt: null,
+    desc: "B站 UP「霍华德vlog」用 5.5 生成的叙事短片,2.39:1 电影宽幅,272 秒 1080p,1.5 万播放。",
+    tags: ["视频", "B站", "短片"]
   },
 
   // ── 游戏·互动 ──────────────────────────────────────────────
@@ -163,6 +225,7 @@ window.WORKS = [
     title: "Pelican 小游戏(社区传统测试项目)",
     cat: "game", url: "https://claude-opus-5-5.riba2534.cn/",
     discuss: "https://news.ycombinator.com/item?id=49812241",
+    poster: "media/pelican-game.jpg",
     date: "2026-09-23", source: "riba2534.cn", pts: 7, cmt: 4,
     desc: "发布次日出品、可以直接玩的鹈鹕小游戏——鹈鹕是 Claude 社区的吉祥物梗。",
     tags: ["游戏", "鹈鹕", "可玩"]
@@ -172,6 +235,7 @@ window.WORKS = [
     title: "Tokken:AI 大模型乱斗格斗游戏",
     cat: "game", url: "https://tokken.win/",
     discuss: "https://news.ycombinator.com/item?id=49858875",
+    poster: "media/tokken.jpg",
     date: "2026-09-26", source: "tokken.win", pts: 5, cmt: 2,
     desc: "浏览器格斗游戏:让各家 AI 模型互相打架、掉血、对战,看谁笑到最后。",
     tags: ["游戏", "格斗", "浏览器"]
@@ -181,6 +245,7 @@ window.WORKS = [
     title: "星际争霸 BW:LLM 写代码对战竞技场",
     cat: "game", url: "https://starskirmish.com/bench/",
     discuss: "https://news.ycombinator.com/item?id=49858284",
+    poster: "media/starskirmish.jpg",
     date: "2026-09-26", source: "starskirmish.com", pts: 4, cmt: 1,
     desc: "LLM 通过写代码操控《星际争霸:母巢之战》互掐的竞技场。",
     tags: ["游戏", "RTS", "竞技场"]
@@ -190,6 +255,7 @@ window.WORKS = [
     title: "Lumen Vale:97 分钟做成的浏览器 Minecraft",
     cat: "game", url: "https://twitter.com/noahwachnik/status/2102470200415166699",
     discuss: null,
+    video: "media/lumen-vale.mp4", poster: "media/lumen-vale.jpg", dur: 23,
     date: "2026-09-23", source: "twitter.com", pts: null, cmt: null,
     desc: "Noah Wachnik 用 5.5 在 1 小时 37 分里做出的可玩 Minecraft 克隆:涟漪水面、昼夜光照、地形生成全都齐活。",
     tags: ["游戏", "Minecraft", "可玩"]
@@ -201,6 +267,7 @@ window.WORKS = [
     title: "Bosphore 1819:复活 200 年前的伊斯坦布尔地图",
     cat: "art", url: "https://twitter.com/cahidarda/status/2103218970115678497",
     discuss: "https://news.ycombinator.com/item?id=49836367",
+    video: "media/bosphore-1819.mp4", poster: "media/bosphore-1819.jpg", dur: 10,
     date: "2026-09-24", source: "twitter.com", pts: 1, cmt: 1,
     desc: "用 5.5 修复并动态化 1819 年的博斯普鲁斯海峡古地图。",
     tags: ["地图", "修复", "历史"]
@@ -210,6 +277,7 @@ window.WORKS = [
     title: "旅行商问题画肖像(TSP Art)",
     cat: "art", url: "https://www.echohive.ai/tsp-art",
     discuss: "https://news.ycombinator.com/item?id=49824578",
+    video: "media/tsp-art.mp4", poster: "media/tsp-art.jpg", dur: 21,
     date: "2026-09-24", source: "echohive.ai", pts: 1, cmt: 0,
     desc: "让 5.5 用一条不间断的 TSP 路线画出人像。",
     tags: ["生成艺术", "TSP", "算法"]
@@ -219,6 +287,7 @@ window.WORKS = [
     title: "「可以走进去的十五幅名画」",
     cat: "art", url: "https://www.echohive.ai/how-we-made-living-paintings",
     discuss: null,
+    video: "media/living-paintings.mp4", poster: "media/living-paintings.jpg", dur: 232,
     date: "2026-09-27", source: "echohive.ai", pts: null, cmt: null,
     desc: "把十五幅历史名画做成可步入的动态画:随节拍喷发的火山、十万盏灯笼点亮的小镇,5.5 出品。",
     tags: ["名画", "动态化", "生成艺术"]
@@ -228,6 +297,7 @@ window.WORKS = [
     title: "《五号屠场》4D 时空点云可视化",
     cat: "art", url: "https://twitter.com/bilawalsidhu/status/2102598907817587141",
     discuss: null,
+    video: "media/slaughterhouse-4d.mp4", poster: "media/slaughterhouse-4d.jpg", dur: 22,
     date: "2026-09-23", source: "twitter.com", pts: null, cmt: null,
     desc: "前 Google PM Bilawal Sidhu 用 5.5 把 2D 视频转成钉在时空里的 3D 高斯点云,致敬冯内古特笔下的时间观。",
     tags: ["可视化", "4D", "点云"]
@@ -237,6 +307,7 @@ window.WORKS = [
     title: "像素魔法师:单文件 60fps 精灵动画",
     cat: "art", url: "https://twitter.com/majidmanzarpour/status/2102476258948927543",
     discuss: null,
+    video: "media/pixel-wizard.mp4", poster: "media/pixel-wizard.jpg", dur: 11,
     date: "2026-09-23", source: "twitter.com", pts: null, cmt: null,
     desc: "Majid 用 5.5 产出的自包含 HTML 像素魔法师:128×96、固定 24 色调色板、状态机驱动,60fps 主循环零内存分配。",
     tags: ["像素画", "动画", "工程洁癖"]
@@ -248,6 +319,7 @@ window.WORKS = [
     title: "Kimi K3 vs Opus 5.5:谁做的宝可梦『蠕虫』更强",
     cat: "research", url: "https://www.runsybil.com/blog/kimi-k3-vs-claude-opus-5-5-how-two-flagship-llms-built-pokemon-emerald-worms",
     discuss: "https://news.ycombinator.com/item?id=49868056",
+    poster: "media/kimi-pokemon.jpg",
     date: "2026-09-27", source: "runsybil.com", pts: 3, cmt: 0,
     desc: "两家旗舰模型各自在《宝可梦:绿宝石》里造蠕虫的硬核对比。",
     tags: ["对比评测", "游戏AI"]
@@ -257,6 +329,7 @@ window.WORKS = [
     title: "让 Opus 5.5 查中本聪的新线索",
     cat: "research", url: "https://notesbylex.com/can-claude-opus-5-5-find-any-new-leads-on-satoshi-nakamoto",
     discuss: "https://news.ycombinator.com/item?id=49860574",
+    poster: "media/satoshi.jpg",
     date: "2026-09-26", source: "notesbylex.com", pts: 3, cmt: 0,
     desc: "把多年中本聪悬案材料喂给 5.5,看能否挖出新线索。",
     tags: ["考古", "长上下文"]
@@ -275,6 +348,7 @@ window.WORKS = [
     title: "Part Catalog Bench 拿下 75.6%",
     cat: "research", url: "https://partcatalogbench.adamjohnson.site",
     discuss: "https://news.ycombinator.com/item?id=49823138",
+    poster: "media/partcatalog.jpg",
     date: "2026-09-23", source: "adamjohnson.site", pts: 1, cmt: 0,
     desc: "5.5 在零件目录基准上得分 75.6%,页面附完整跑分细节。",
     tags: ["benchmark", "工程"]
@@ -322,6 +396,7 @@ window.WORKS = [
     title: "1 小时用 Rust 复刻 FL Studio",
     cat: "build", url: "https://twitter.com/skewbed/status/2104272573613867373",
     discuss: "https://news.ycombinator.com/item?id=49869251",
+    video: "media/flstudio-rust.mp4", poster: "media/flstudio-rust.jpg", dur: 36,
     date: "2026-09-27", source: "twitter.com", pts: 2, cmt: 1,
     desc: "单次会话让 5.5 用 Rust 写出一个能跑的 FL Studio 复刻。",
     tags: ["复刻", "Rust", "音频"]
@@ -331,6 +406,7 @@ window.WORKS = [
     title: "ParkourNote:一人一月的研究工作台",
     cat: "build", url: "https://note.parkourlabs.io/",
     discuss: "https://news.ycombinator.com/item?id=49872233",
+    poster: "media/parkournote.jpg",
     date: "2026-09-28", source: "parkourlabs.io", pts: 2, cmt: 0,
     desc: "Show HN:独自一人靠 5.5 一个月做出的研究笔记工作台。",
     tags: ["产品", "独立开发"]
@@ -349,6 +425,7 @@ window.WORKS = [
     title: "HAProxy C→Rust 迁移(Anthropic 内部演示)",
     cat: "build", url: "https://www.anthropic.com/claude-opus-5-5",
     discuss: "https://news.ycombinator.com/item?id=49803892",
+    poster: "media/haproxy-rust.jpg",
     date: "2026-09-22", source: "anthropic.com", pts: null, cmt: null,
     desc: "官方案例:9.5 小时完成 HAProxy 的 C 到 Rust 翻译,成本比 Fable 5.1 低 51%。",
     tags: ["官方案例", "迁移", "Rust"]
@@ -358,6 +435,7 @@ window.WORKS = [
     title: "铅笔草图一键变 3D 投石机物理模拟",
     cat: "build", url: "https://twitter.com/poolio/status/2102445641205248145",
     discuss: null,
+    video: "media/trebuchet-sketch.mp4", poster: "media/trebuchet-sketch.jpg", dur: 80,
     date: "2026-09-23", source: "twitter.com", pts: null, cmt: null,
     desc: "前 Google Brain/DeepMind 工程师 Ben Poole:一张手绘草图让 5.5 直接生成带真实弹道、可调配重与角度的 3D 投石机。",
     tags: ["物理", "草图", "模拟器"]
@@ -369,6 +447,7 @@ window.WORKS = [
     title: "Artificial Analysis:5.5 智能与价格分析",
     cat: "article", url: "https://artificialanalysis.ai/models/claude-opus-5-5",
     discuss: "https://news.ycombinator.com/item?id=49804316",
+    poster: "media/artificialanalysis.jpg",
     date: "2026-09-22", source: "artificialanalysis.ai", pts: 333, cmt: 106,
     desc: "第三方基准机构对 5.5(Max 档)的智能/速度/价格横评。",
     tags: ["评测", "跑分", "价格"]
@@ -378,6 +457,7 @@ window.WORKS = [
     title: "Simon Willison:Opus 5.5、GPT-6 Sol/Luna 与新价格战",
     cat: "article", url: "https://simonwillison.net/2026/Sep/22/opus-and-sol-and-luna/",
     discuss: "https://news.ycombinator.com/item?id=49812887",
+    poster: "media/simonwillison.jpg",
     date: "2026-09-23", source: "simonwillison.net", pts: 3, cmt: 0,
     desc: "老牌观察者对三款新模型定价与能力的首日点评。",
     tags: ["点评", "价格战"]
@@ -387,6 +467,7 @@ window.WORKS = [
     title: "Zvi:Opus 5.5 应当抬高你的野心",
     cat: "article", url: "https://thezvi.substack.com/p/claude-opus-55-should-raise-your",
     discuss: "https://news.ycombinator.com/item?id=49855670",
+    poster: "media/zvi-ambitions.jpg",
     date: "2026-09-26", source: "thezvi.substack.com", pts: 10, cmt: 5,
     desc: "长文评述:5.5 的发布意味着什么,该把预期抬到哪。",
     tags: ["长文", "评论"]
@@ -396,6 +477,7 @@ window.WORKS = [
     title: "Opus 5.5: Things People Created(作品合集)",
     cat: "article", url: "https://favtutor.com/claude-opus-5-5-real-examples/",
     discuss: "https://news.ycombinator.com/item?id=49823070",
+    poster: "media/favtutor-collection.jpg",
     date: "2026-09-23", source: "favtutor.com", pts: 2, cmt: 0,
     desc: "媒体整理的 5.5 真实作品合集——和本站定位最像,可交叉浏览补漏。",
     tags: ["合集", "媒体"]
@@ -405,6 +487,7 @@ window.WORKS = [
     title: "The Verge:5.5 带来更严的网络安全护栏",
     cat: "article", url: "https://www.theverge.com/ai-artificial-intelligence/998868/anthropic-claude-opus-5-5-cyber",
     discuss: "https://news.ycombinator.com/item?id=49804516",
+    poster: "media/verge-cyber.jpg",
     date: "2026-09-22", source: "theverge.com", pts: 2, cmt: 1,
     desc: "报道 5.5 把大部分网络攻防类任务改由 Opus 4.8 处理的新安全策略。",
     tags: ["安全", "报道"]
@@ -414,6 +497,7 @@ window.WORKS = [
     title: "CodeRabbit:5.5 做代码评审——抓得更多,漏得不同",
     cat: "article", url: "https://www.coderabbit.ai/blog/opus-5-5-model-review",
     discuss: "https://news.ycombinator.com/item?id=49804509",
+    poster: "media/coderabbit-review.jpg",
     date: "2026-09-22", source: "coderabbit.ai", pts: 2, cmt: 0,
     desc: "代码评审视角的实测:发现更多问题,但盲区分布也变了。",
     tags: ["代码评审", "实测"]
@@ -432,6 +516,7 @@ window.WORKS = [
     title: "5.5 降价了,但弄坏了 agent 的四件事",
     cat: "article", url: "https://thenewstack.io/claude-opus-agent-migration/",
     discuss: "https://news.ycombinator.com/item?id=49817871",
+    poster: "media/newstack-migration.jpg",
     date: "2026-09-23", source: "thenewstack.io", pts: 1, cmt: 0,
     desc: "升级迁移指南:agent 工程里被 5.5 静默改变的行为清单。",
     tags: ["迁移", "agent"]
@@ -441,6 +526,7 @@ window.WORKS = [
     title: "为什么 5.5 和 GPT-6 Sol 更便宜?",
     cat: "article", url: "https://www.claudecodecamp.com/p/why-new-models-get-cheaper",
     discuss: "https://news.ycombinator.com/item?id=49817419",
+    poster: "media/why-cheaper.jpg",
     date: "2026-09-23", source: "claudecodecamp.com", pts: 1, cmt: 0,
     desc: "解析新一代旗舰模型降价的供给侧原因。",
     tags: ["定价", "分析"]
